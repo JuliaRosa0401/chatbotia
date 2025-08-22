@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-b from-[#0e0b16] to-[#1f1a2e] text-white font-serif p-6 relative">
+  <!-- Névoa ou partículas (efeito depois via JS ou CSS) -->
+  <div class="absolute inset-0 pointer-events-none opacity-20 bg-[url('/nevoa.png')] bg-cover"></div>
+
+  <!-- Cabeçalho -->
+  <h1 class="text-4xl text-center text-purple-300 mb-6 tracking-widest font-bold glow">🌙 Oráculo Místico</h1>
+
+  <!-- Container do chatbot -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-black/40 p-6 rounded-3xl shadow-lg ring-2 ring-purple-700 backdrop-blur">
+    <!-- Ilustração do oráculo -->
+    <div class="flex flex-col items-center justify-center">
+      <img src="/cartas-oraculo.png" class="w-2/3 animate-pulse" alt="Cartas do Oráculo" />
+      <p class="text-purple-100 mt-4 italic">“O destino se move… estás pronto para ouvir?”</p>
+    </div>
+
+    <!-- Janela de chat -->
+    <div class="flex flex-col h-[400px] bg-black/70 p-4 rounded-xl overflow-hidden shadow-inner">
+      <div id="chat" class="flex-1 overflow-y-auto space-y-2 text-sm px-2">
+        <!-- Mensagens aparecem aqui -->
+        <div class="text-green-300 italic">Status: Conectado aos planos astrais...</div>
+        <div class="text-blue-200"><strong>Você:</strong> Qual minha carta de hoje?</div>
+        <div class="text-purple-300"><strong>Oraculum:</strong> A Sacerdotisa... silêncio, sabedoria e o poder do oculto.</div>
+      </div>
+
+      <!-- Campo de entrada -->
+      <form id="form" class="flex mt-4">
+        <input type="text" id="msg" class="flex-1 bg-black/40 border border-purple-700 p-2 rounded-l-xl focus:outline-none text-white" placeholder="Digite sua pergunta ao Oráculo..." />
+        <button type="submit" class="bg-purple-700 hover:bg-purple-900 transition px-4 rounded-r-xl text-white font-bold">Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

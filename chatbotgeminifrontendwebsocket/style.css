@@ -1,0 +1,678 @@
+:root {
+    /* ... suas variáveis existentes ... */
+
+    /* Novo: Botão de Voltar */
+    --back-button-bg: #6c757d;
+    --back-button-hover-bg: #5a6268;
+
+    /* Novo: Cards de Sub-sugestão */
+    --sub-suggestion-card-bg: rgba(255, 255, 255, 0.15); /* Fundo da sub-sugestão */
+    --sub-suggestion-card-hover-bg: rgba(255, 255, 255, 0.3);
+
+    /* ... suas variáveis existentes ... */
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #ffd0e4;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+color: #333;
+gap: 10px;
+    
+     background-image: url('fundo.jpg');/* Configura como a imagem será exibida */
+    background-size: cover; /* Faz a imagem cobrir toda a área do body, cortando se necessário */
+    background-repeat: no-repeat; /* Impede que a imagem se repita */
+    background-attachment: fixed; /* Fixa a imagem no fundo, para que não role com o conteúdo */
+    background-position: center center;
+}
+
+.chat-container {
+background-color: #fffbe2;
+border-radius: 8px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+width: 48%;
+max-width: 600px;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+height: 80vh;
+max-height: 700px;
+}
+.chat-container figure {
+width: 100%;
+}
+.chat-container figure img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+}
+
+#controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Estilo base para os dois botões */
+#iniciarBtn, #encerrarBtn {
+    padding: 12px 25px;                /* Padding mais confortável */
+    border: none;                      /* Remove borda padrão */
+    border-radius: 30px;               /* Deixa formato pílula */
+    font-weight: bold;                 /* Texto em negrito */
+    cursor: pointer;                   /* Cursor de mãozinha */
+    font-size: 1em;                    /* Tamanho de texto agradável */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Animações suaves */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidade */
+    color: white;                      /* Texto branco */
+}
+
+/* Botão Iniciar - Verde */
+#iniciarBtn {
+    background-color: #28a745;
+}
+
+#iniciarBtn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Botão Encerrar - Vermelho */
+#encerrarBtn {
+    background-color: #dc3545;
+}
+
+#encerrarBtn:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estado desabilitado para ambos */
+#iniciarBtn:disabled, #encerrarBtn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+
+.chat-container #controles {
+width: 100%;
+display: flex;
+justify-content: space-around;
+align-items: center;
+}
+.chat-container #controles #iniciarBtn {
+padding: 10px 20px;
+background-color: #19b804;
+color: white;
+border: none;
+border-radius: 20px;
+cursor: pointer;
+font-size: 1em;
+transition: background-color 0.2s ease;
+}
+.chat-container #controles #iniciarBtn:hover {
+background-color: #169405;
+}
+.chat-container #controles #encerrarBtn {
+padding: 10px 20px;
+background-color: #e61e1e;
+color: white;
+border: none;
+border-radius: 20px;
+cursor: pointer;
+font-size: 1em;
+transition: background-color 0.2s ease;
+}
+.chat-container #controles #encerrarBtn:hover {
+background-color: #b61515;
+}
+.chat-header {
+background-color: #cb0b4b;
+color: white;
+padding: 15px;
+text-align: center;
+border-bottom: 1px solid #b30042;
+}
+.chat-header h1 {
+margin: 0;
+font-size: 1.5em;
+}
+#connection-status {
+font-size: 0.8em;
+padding-top: 5px;
+}
+.status-online {
+color: #c8e6c9; /* Verde claro para online */
+}
+
+.status-offline {
+color: #d8ac32; 
+}
+.chat-box {
+flex-grow: 1;
+padding: 20px;
+overflow-y: auto;
+background-color: #ffc8f4;
+border-bottom: 1px solid #ddd;
+}
+.message {
+margin-bottom: 15px;
+line-height: 1.4;
+padding: 10px 15px;
+border-radius: 18px;
+max-width: 80%;
+word-wrap: break-word; /* Quebra palavras longas */
+}
+.message strong {
+font-weight: bold;
+}
+.user-message {
+background-color: #ff00a2;
+color: white;
+margin-left: auto; /* Alinha à direita */
+border-bottom-right-radius: 5px; /* Estilo "balão" */
+}
+/* Estilos para o container do chat */
+.chat-box {
+    /* Mantenha seus estilos existentes, como overflow-y, height, etc. */
+    overflow-y: auto;
+    height: 400px; /* Ajuste conforme necessário */
+    padding: 10px;
+    background-color: #f0f0f0; /* Fundo leve para o chat box */
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para as mensagens do bot */
+.bot-message {
+    background-color: #fae6f4; /* Um tom de lavanda suave para as mensagens do bot */
+    padding: 10px 15px; /* Mais padding para o conteúdo */
+    border-radius: 15px; /* Bordas mais arredondadas */
+    margin-bottom: 10px;
+    align-self: flex-start; /* Alinha à esquerda no container flex */
+    max-width: 80%; /* Limita a largura da bolha da mensagem */
+    word-wrap: break-word; /* Garante que palavras longas quebrem */
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+}
+
+/* Estilos para parágrafos dentro das mensagens do bot (se houver) */
+.bot-message p {
+    margin-top: 5px;    /* Espaçamento acima do parágrafo */
+    margin-bottom: 5px; /* Espaçamento abaixo do parágrafo */
+    line-height: 1.5;   /* Altura da linha para melhor leitura */
+}
+
+/* Estilos para as listas não ordenadas dentro das mensagens do bot */
+.bot-message ul {
+    list-style-type: disc; /* Marcador de bolinha padrão */
+    margin-left: 20px;     /* Recuo da lista */
+    padding-left: 0;       /* Remove padding padrão, pois margin-left já recua */
+    margin-top: 10px;      /* Espaço acima da lista */
+    margin-bottom: 10px;   /* Espaço abaixo da lista */
+}
+
+/* Estilos para os itens da lista dentro das mensagens do bot */
+.bot-message li {
+    margin-bottom: 5px; /* Espaço entre os itens da lista */
+    line-height: 1.4;   /* Altura da linha para melhor leitura */
+    /* text-indent: -1.5em; /* Opcional: para alinhar o texto com o marcador */
+    /* padding-left: 1.5em; /* Opcional: para compensar o text-indent */
+}
+
+/* Estilos para negrito (strong) dentro das mensagens do bot */
+.bot-message strong {
+    color: #820052; /* Uma cor roxa escura para o negrito, para se destacar */
+}
+
+/* Seus outros estilos devem continuar aqui */
+/* Exemplo de como seus outros estilos podem aparecer */
+/* .chat-container, .user-message, etc. */
+.status-message {
+background-color: #6c757d;
+color: white;
+font-style: italic;
+font-size: 0.9em;
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+max-width: 90%;
+border-radius: 5px;
+}
+.status-message .status-text{
+color: white;
+}
+
+.error-text { /* Usado dentro de status-message para erros */
+color: #ffdddd !important; /* Cor de texto específica para erros */
+}
+.status-message.error-text strong {
+color: #ffdddd !important;
+}
+
+.chat-input-area {
+display: flex;
+padding: 15px;
+background-color: #fff;
+border-top: 1px solid #ddd;
+}
+#message-input {
+flex-grow: 1;
+padding: 10px 15px;
+border: 1px solid #ccc;
+border-radius: 20px;
+margin-right: 10px;
+font-size: 1em;
+}
+#message-input:focus {
+outline: none;
+border-color: #ff00aa;
+box-shadow: 0 0 0 0.2rem rgba(255, 0, 162, 0.25);
+}
+#send-button {
+padding: 10px 20px;
+background-color: #e31173;
+color: white;
+border: none;
+border-radius: 20px;
+cursor: pointer;
+font-size: 1em;
+transition: background-color 0.2s ease;
+}
+#send-button:hover {
+background-color: #b30089;
+}
+/* Scrollbar customizada (opcional, para Webkit/Blink browsers) */
+.chat-box::-webkit-scrollbar {
+width: 8px;
+}
+.chat-box::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius: 10px;
+}
+.chat-box::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 10px;
+}
+.chat-box::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+
+.floating-suggestions {
+    position: fixed; /* Fixa na tela */
+    bottom: 30px; /* Distância do fundo */
+    right: 30px; /* Distância da direita */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    display: flex;
+    flex-direction: column; /* Coloca o botão e as sugestões um abaixo do outro */
+    align-items: flex-end; /* Alinha o conteúdo à direita (para o botão e o painel) */
+    gap: 15px; /* Espaçamento entre o botão e o container de sugestões */
+}
+
+/* Estilos para o botão flutuante de toggle */
+#toggleSuggestionsBtn {
+    background-color: #e22b7a; /* Um roxo vibrante */
+    color: white;
+    width: 60px; /* Largura e altura para ser um círculo */
+    height: 60px;
+    border-radius: 50%; /* Transforma em círculo */
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra mais forte para destacar */
+    font-size: 1.8em; /* Tamanho do ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#toggleSuggestionsBtn:hover {
+    background-color: #dc1f8d; /* Roxo um pouco mais escuro no hover */
+    transform: scale(1.05); /* Pequeno zoom no hover */
+}
+
+/* Estilos para o container das sugestões de início quando escondido/aparecendo */
+.suggestions-container {
+    /* Mantém a estética anterior, mas adiciona as propriedades de transição */
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 350px; /* Largura fixa para o painel de sugestões */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    /* Propriedades para a transição de expansão */
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco abaixo para o efeito de "subir" */
+    pointer-events: none; /* Não interage com o mouse quando escondido */
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* Transição suave */
+}
+
+/* Classe que será adicionada/removida pelo JavaScript para expandir */
+.suggestions-container.expanded {
+    opacity: 1; /* Totalmente visível */
+    transform: translateY(0); /* Posição final (sem deslocamento) */
+    pointer-events: auto; /* Permite interação com o mouse */
+}
+
+.suggestions-container h2 {
+    color: #55083a; /* Cor do título */
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Grid para organizar os cards de sugestão */
+.suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+    gap: 15px; /* Espaçamento entre os cards */
+    width: 100%;
+}
+
+/* Estilos para cada card de sugestão */
+.suggestion-card {
+    background-color: rgba(0, 0, 0, 0.3); /* Fundo escuro sutilmente transparente */
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    height: 120px; /* Altura fixa para os cards */
+}
+
+.suggestion-card:first-child { /* Estilo para o primeiro card (tarot) */
+    grid-column: span 2; /* Ocupa as duas colunas */
+    height: 150px; /* Maior altura para o card principal */
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.suggestion-card:hover {
+    transform: translateY(-5px); /* Efeito de levantar */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo um pouco mais escuro no hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Ícone dentro do card de sugestão */
+.suggestion-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Transforma em círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 2.2em; /* Tamanho do ícone */
+    color: white; /* Cor do ícone */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Texto da sugestão */
+.suggestion-card span {
+    color: #fff; /* Cor do texto */
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+/* Media Queries para responsividade - ajuste para telas menores */
+@media (max-width: 768px) {
+    /* Ajustes para o botão flutuante e sugestões em telas menores */
+    .floating-suggestions {
+        bottom: 15px; /* Mais próximo da borda em mobile */
+        right: 15px;
+        gap: 10px;
+    }
+
+    .suggestions-container {
+        max-width: 80%; /* Ajusta a largura em telas menores */
+        width: auto; /* Permite que a largura se ajuste ao max-width */
+        padding: 15px;
+    }
+
+    .suggestions-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+    }
+
+    .suggestion-card:first-child {
+        grid-column: span 1;
+        height: 120px;
+    }
+}
+
+/* Novo container para agrupar os chat-containers */
+.chat-wrapper {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Classes para diferenciar os containers do chat */
+.chat-container.logo-container {
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+}
+
+
+
+/* Estilos base para todos os botões de controle (se ainda não os tem) */
+.control-button { /* Reusing for general button styles */
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--border-radius-pill);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+    box-shadow: var(--box-shadow-md);
+    font-size: 0.95em;
+    color: var(--text-light);
+}
+
+/* --- Novos estilos para as sugestões e sub-sugestões --- */
+
+/* Novo container para as sugestões principais */
+.main-suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+/* Esconder os grids de sub-sugestões por padrão */
+.sub-suggestions {
+    display: none; /* Esconde as sub-sugestões por padrão */
+    width: 100%;
+    margin-top: var(--spacing-md);
+    display: grid; /* Usar grid para as sub-sugestões */
+    grid-template-columns: 1fr; /* Uma coluna por padrão */
+    gap: var(--spacing-sm);
+}
+
+/* Estilo para o cartão principal para ajustar a altura */
+.suggestion-card.main-card {
+    height: auto; /* A altura se ajusta ao conteúdo */
+    /* Remova a regra grid-column: span 2; se você tinha no .suggestion-card:first-child */
+}
+
+/* Esconder o ícone e texto do card principal quando as sub-sugestões estiverem visíveis */
+.suggestion-card.main-card.active .suggestion-icon,
+.suggestion-card.main-card.active > span {
+    display: none;
+}
+
+/* Mostrar apenas as sub-sugestões do card ativo */
+.suggestion-card.main-card.active .sub-suggestions {
+    display: grid; /* Muda para grid para exibir as sub-sugestões */
+}
+
+/* Estilo para os cards de sub-sugestão */
+.sub-suggestion-card {
+    background-color: var(--sub-suggestion-card-bg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    text-align: center;
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 0.9em;
+    box-shadow: var(--box-shadow-sm);
+    white-space: nowrap; /* Impede que o texto quebre */
+    overflow: hidden; /* Esconde o texto que transborda */
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+}
+
+.sub-suggestion-card:hover {
+    background-color: var(--sub-suggestion-card-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-md);
+}
+
+/* Estilo para o botão de voltar */
+.back-button {
+    background-color: var(--back-button-bg);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--border-radius-pill);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: background-color var(--transition-normal);
+}
+.back-button:hover {
+    background-color: var(--back-button-hover-bg);
+}
+
+/* Classe hidden para esconder elementos com JS */
+.hidden {
+    display: none !important;
+}
+
+/* Ajustes na Media Query para responsividade */
+@media (max-width: 768px) {
+    .chat-wrapper {
+        flex-direction: column;
+        width: 95%;
+    }
+    .chat-container {
+        width: 100%;
+        height: auto;
+        max-height: 90vh;
+    }
+    .chat-container.logo-container {
+        height: 25vh;
+        max-height: 200px;
+    }
+    .chat-container.main-chat-window {
+        height: 65vh;
+        max-height: none;
+    }
+
+    .floating-suggestions {
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+    .suggestions-container {
+        max-width: 90%;
+        width: auto;
+        padding: var(--spacing-md);
+    }
+    .main-suggestions-grid { /* Ajustado para 1 coluna em mobile */
+        grid-template-columns: 1fr;
+    }
+    .suggestion-card:first-child { /* Se ainda quiser um estilo diferente para o primeiro, ajuste aqui */
+        grid-column: span 1;
+        height: auto; /* Ajuste para auto */
+    }
+    .sub-suggestions {
+        grid-template-columns: 1fr; /* As sub-sugestões também em uma coluna */
+    }
+}
+
+/* Animação e telas */
+.suggestions-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.suggestions-screen.active-screen {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sub-sugestões grid */
+.sub-suggestions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+}
+
+/* Sub-sugestões cards */
+.sub-suggestion-card {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: rgb(122, 36, 36);
+    text-align: center;
+}
+
+.sub-suggestion-card:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Botão voltar */
+.back-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}

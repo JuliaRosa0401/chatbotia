@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardim de Histórias</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="chat-container">
+        <figure>
+            <img src="Moonlight Magic.png" alt="Moonlight Magic Logo">
+        </figure>
+        <div id="controles">
+            <button id="iniciarBtn">Iniciar conversa</button>
+            <button id="encerrarBtn">Encerrar conversa</button>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Chatbot Amigável</h1>
+            <div id="connection-status" class="status-offline">Desconectado</div>
+        </header>
+        <div id="chat-box" class="chat-box"></div>
+        <footer class="chat-input-area">
+            <input type="text" id="message-input" placeholder="Digite sua mensagem aqui...">
+        </footer>
+    </div>
+
+    <!-- Sugestões Flutuantes -->
+    <div class="floating-suggestions">
+        <button id="toggleSuggestionsBtn">
+            <i class="fas fa-lightbulb"></i>
+        </button>
+
+        <div class="suggestions-container hidden">
+
+            <!-- Tela Principal -->
+            <div id="mainSuggestions" class="suggestions-screen active-screen">
+                <h2>Sugestões para Começar</h2>
+                <div class="suggestions-grid">
+                    <div class="suggestion-card" data-topic="mitologia">
+                        <div class="suggestion-icon" style="background-color: #a3004c;">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <span>Mitologia</span>
+                    </div>
+                    <div class="suggestion-card" data-topic="contos">
+                        <div class="suggestion-icon" style="background-color: #ff00bf;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span>Contos</span>
+                    </div>
+                    <div class="suggestion-card" data-topic="recomendacoes">
+                        <div class="suggestion-icon" style="background-color: #dc148c;">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <span>Recomendações</span>
+                    </div>
+                    <div class="suggestion-card" data-topic="autores">
+                        <div class="suggestion-icon" style="background-color: #e58ac2;">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <span>Autores</span>
+                    </div>
+                    <div class="suggestion-card" data-topic="espiritualidade">
+                        <div class="suggestion-icon" style="background-color: #ca2be2;">
+                            <i class="fas fa-ghost"></i>
+                        </div>
+                        <span>Espiritualidade</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub-sugestões Mitologia -->
+            <div id="subSuggestions-mitologia" class="suggestions-screen">
+                <button class="back-button"><i class="fas fa-arrow-left"></i> Voltar</button>
+                <h2>Mitologia</h2>
+                <div class="sub-suggestions-grid">
+                    <div class="sub-suggestion-card" data-message="Me fale sobre mitologia grega">Mitologia Grega</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre mitologia egípcia">Mitologia Egípcia</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre mitologia nórdica">Mitologia Nórdica</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre mitologia romana">Mitologia Romana</div>
+                </div>
+            </div>
+
+            <!-- Sub-sugestões Contos -->
+            <div id="subSuggestions-contos" class="suggestions-screen">
+                <button class="back-button"><i class="fas fa-arrow-left"></i> Voltar</button>
+                <h2>Contos</h2>
+                <div class="sub-suggestions-grid">
+                    <div class="sub-suggestion-card" data-message="Me fale sobre contos de fadas">Contos de Fadas</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre contos de terror">Contos de Terror</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre contos folclóricos">Contos Folclóricos</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre contos modernos">Contos Modernos</div>
+                </div>
+            </div>
+
+            <!-- Sub-sugestões Recomendações -->
+            <div id="subSuggestions-recomendacoes" class="suggestions-screen">
+                <button class="back-button"><i class="fas fa-arrow-left"></i> Voltar</button>
+                <h2>Recomendações</h2>
+                <div class="sub-suggestions-grid">
+                    <div class="sub-suggestion-card" data-message="Me indique um livro de romance">Romance</div>
+                    <div class="sub-suggestion-card" data-message="Me indique um livro de fantasia">Fantasia</div>
+                    <div class="sub-suggestion-card" data-message="Me indique um livro de suspense">Suspense</div>
+                    <div class="sub-suggestion-card" data-message="Me indique um livro de ficção científica">Ficção Científica</div>
+                </div>
+            </div>
+
+            <!-- Sub-sugestões Autores -->
+            <div id="subSuggestions-autores" class="suggestions-screen">
+                <button class="back-button"><i class="fas fa-arrow-left"></i> Voltar</button>
+                <h2>Autores</h2>
+                <div class="sub-suggestions-grid">
+                    <div class="sub-suggestion-card" data-message="Me fale sobre autores brasileiros">Autores Brasileiros</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre autores clássicos">Autores Clássicos</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre autores contemporâneos">Autores Contemporâneos</div>
+                    <div class="sub-suggestion-card" data-message="Me fale sobre autoras mulheres">Autoras Mulheres</div>
+                </div>
+            </div>
+
+            <!-- Sub-sugestões Espiritualidade -->
+            <div id="subSuggestions-espiritualidade" class="suggestions-screen">
+                <button class="back-button"><i class="fas fa-arrow-left"></i> Voltar</button>
+                <h2>Espiritualidade</h2>
+                <div class="sub-suggestions-grid">
+                    <div class="sub-suggestion-card" data-message="Me indique livros sobre autoconhecimento">Autoconhecimento</div>
+                    <div class="sub-suggestion-card" data-message="Me indique livros sobre meditação e mindfulness">Meditação e Mindfulness</div>
+                    <div class="sub-suggestion-card" data-message="Me indique livros sobre espiritualidade universalista">Espiritualidade Universalista</div>
+                    <div class="sub-suggestion-card" data-message="Me indique livros sobre filosofia espiritual">Filosofia Espiritual</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

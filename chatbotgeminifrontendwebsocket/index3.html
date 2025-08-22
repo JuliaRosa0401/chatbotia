@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sugestões com Sub-sugestões</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      padding: 20px;
+    }
+
+    #suggestions-container {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    button.main-suggestion, button.sub-suggestion {
+      display: block;
+      width: 100%;
+      padding: 10px 15px;
+      margin: 6px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #f7f7f7;
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+      user-select: none;
+    }
+
+    button.main-suggestion:hover {
+      background-color: #d0e8ff;
+      border-color: #5b9df9;
+    }
+
+    button.sub-suggestion {
+      margin-left: 20px;
+      font-size: 14px;
+      background-color: #eef6ff;
+      border-color: #a3c7ff;
+    }
+
+    button.sub-suggestion:hover {
+      background-color: #c2dbff;
+    }
+
+    .subs {
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Sugestões</h2>
+  <div id="suggestions-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('suggestions-container');
+
+      // Dados das sugestões principais e sub-sugestões
+      const suggestions = [
+        {
+          title: 'Sugestão Principal 1',
+          subs: ['Sub 1.1', 'Sub 1.2', 'Sub 1.3']
+        },
+        {
+          title: 'Sugestão Principal 2',
+          subs: ['Sub 2.1', 'Sub 2.2']
+        },
+        {
+          title: 'Sugestão Principal 3',
+          subs: ['Sub 3.1', 'Sub 3.2', 'Sub 3.3', 'Sub 3.4']
+        }
+      ];
+
+      function createButton(text, className) {
+        const btn = document.createElement('button');
+        btn.textContent = text;
+        btn.className = className;
+        btn.type = 'button';
+        return btn;
+      }
+
+      function createSubs(subsArray) {
+        const subsDiv = document.createElement('div');
+        subsDiv.className = 'subs';
+        subsArray.forEach(sub => {
+          const subBtn = createButton(sub, 'sub-suggestion');
+          // Aqui você pode adicionar evento ao clicar na sub-sugestão, se quiser
+          subBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            alert(`Você clicou em "${sub}"`);
+          });
+          subsDiv.appendChild(subBtn);
+        });
+        return subsDiv;
+      }
+
+      suggestions.forEach(sugg => {
+        const mainBtn = createButton(sugg.title, 'main-suggestion');
+
+        mainBtn.addEventListener('click', e => {
+          e.stopPropagation();
+
+          // Fecha sub aberto se existir
+          if (mainBtn.nextElementSibling && mainBtn.nextElementSibling.classList.contains('subs')) {
+            mainBtn.nextElementSibling.remove();
+          } else {
+            // Fecha todos os sub-sugestões abertos antes de abrir o atual
+            document.querySelectorAll('.subs').forEach(el => el.remove());
+
+            const subsDiv = createSubs(sugg.subs);
+            mainBtn.insertAdjacentElement('afterend', subsDiv);
+          }
+        });
+
+        container.appendChild(mainBtn);
+      });
+
+      // Fecha qualquer sub-sugestão aberta ao clicar fora
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.subs').forEach(el => el.remove());
+      });
+    });
+  </script>
+
+</body>
+</html>
